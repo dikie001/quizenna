@@ -1,14 +1,12 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 
-const Profile = () => {
+const Scores = () => {
   return (
      <View className="h-screen bg-gradient-to-br from-purple-950 to-slate-950">
-      <Text className="text-xl font-bold text-white">
-        Profile Page
-      </Text>{" "}
-    </View>
-  );
+          <Text>Scores</Text>
+        </View>
+  )
 }
 
-export default Profile
+export default Scores

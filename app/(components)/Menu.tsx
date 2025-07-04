@@ -1,6 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
 import React from "react";
-import { Modal, Text, TouchableOpacity, View, Pressable } from "react-native";
+import { Modal, Pressable, Text, TouchableOpacity, View } from "react-native";
 
 interface MenuProps {
   visible: boolean;
@@ -39,26 +40,25 @@ const Menu = ({
       >
         {/* Menu Container */}
         <Pressable
-          className="bg-white rounded-xl w-full max-w-sm shadow-2xl overflow-hidden"
+          className="ring-1 bg-gradient-to-tr from-purple-950 to-slate-950  rounded-xl w-full max-w-sm shadow-2xl overflow-hidden"
           onPress={(e) => e.stopPropagation()}
         >
           {/* Header with gradient background */}
-          <View className="bg-gradient-to-r from-blue-600 to-purple-600 px-8 py-10 items-center">
-            <View className=" rounded-full p-4 mb-4">
-              <Ionicons name="school" size={32} color="white" />
-            </View>
+          <View className="ring-1 bg-gradient-to-r from-purple-950 to-slate-950 px-8 py-2 items-center">
+            <View className=" rounded-full p-4 "></View>
             <Text className="text-3xl font-bold text-white mb-2">Quizenna</Text>
-            <Text className="text-blue-100 text-center">
-              Challenge your mind with fun quizzes!
-            </Text>
           </View>
 
           {/* Menu Options */}
           <View className="p-6 space-y-3">
             {/* Start Quiz - Primary Action */}
             <TouchableOpacity
-              className="bg-blue-600 rounded-2xl p-4 shadow-lg  flex-row items-center justify-center"
-              onPress={() => handleMenuAction(onStartQuiz)}
+              className=" bg-gradient-to-tl shadow-black/60 from-purple-950 to-slate-950 rounded-2xl p-4 shadow-lg  flex-row items-center justify-center"
+            //   onPress={() => handleMenuAction(onStartQuiz)}
+            onPress={()=>{
+                router.push("/quizes/RandomQuiz");
+                setIsOpen(false)
+            }}
               activeOpacity={0.8}
             >
               <Ionicons
@@ -72,18 +72,24 @@ const Menu = ({
 
             {/* Secondary Actions */}
             <TouchableOpacity
-              className="bg-gray-50 border border-gray-200 rounded-2xl p-4 active:bg-gray-100 flex-row items-center"
+              className="ring outline-none   rounded-2xl p-4 flex-row items-center"
               onPress={() => handleMenuAction(onHighScores)}
               activeOpacity={0.7}
             >
-              <View className="bg-yellow-100 rounded-full p-2 mr-4">
+              <View className="p-2 mr-4">
                 <Ionicons name="trophy" size={20} color="#EAB308" />
               </View>
               <View className="flex-1">
-                <Text className="text-gray-800 text-lg font-semibold">
+                <TouchableOpacity
+                  onPress={() => {
+                    router.push("/(screens)/Scores");
+                    setIsOpen(false);
+                  }}
+                  className="text-primary-light text-lg font-semibold"
+                >
                   High Scores
-                </Text>
-                <Text className="text-gray-500 text-sm">
+                </TouchableOpacity>
+                <Text className="text-gray-400 text-sm">
                   View your best performances
                 </Text>
               </View>
@@ -91,18 +97,24 @@ const Menu = ({
             </TouchableOpacity>
 
             <TouchableOpacity
-              className="bg-gray-50 border border-gray-200 rounded-2xl p-4 active:bg-gray-100 flex-row items-center"
+              className=" ring rounded-2xl p-4 active:bg-gray-100 flex-row items-center"
               onPress={() => handleMenuAction(onSettings)}
               activeOpacity={0.7}
             >
-              <View className="bg-blue-100 rounded-full p-2 mr-4">
+              <View className=" rounded-full p-2 mr-4">
                 <Ionicons name="settings" size={20} color="#3B82F6" />
               </View>
               <View className="flex-1">
-                <Text className="text-gray-800 text-lg font-semibold">
+                <TouchableOpacity
+                  onPress={() => {
+                    router.push("/(screens)/Settings");
+                    setIsOpen(false);
+                  }}
+                  className="text-primary-light text-lg font-semibold"
+                >
                   Settings
-                </Text>
-                <Text className="text-gray-500 text-sm">
+                </TouchableOpacity>
+                <Text className="text-gray-400 text-sm">
                   Customize your experience
                 </Text>
               </View>
@@ -110,18 +122,24 @@ const Menu = ({
             </TouchableOpacity>
 
             <TouchableOpacity
-              className="bg-gray-50 border border-gray-200 rounded-2xl p-4 active:bg-gray-100 flex-row items-center"
+              className="ring border-gray-200 rounded-2xl p-4 active:bg-gray-100 flex-row items-center"
               onPress={() => handleMenuAction(onAbout)}
               activeOpacity={0.7}
             >
-              <View className="bg-green-100 rounded-full p-2 mr-4">
+              <View className=" p-2 mr-4">
                 <Ionicons name="information-circle" size={20} color="#10B981" />
               </View>
               <View className="flex-1">
-                <Text className="text-gray-800 text-lg font-semibold">
+                <TouchableOpacity
+                  onPress={() => {
+                    router.push("/(screens)/About");
+                    setIsOpen(false);
+                  }}
+                  className="text-primary-light text-lg font-semibold"
+                >
                   About
-                </Text>
-                <Text className="text-gray-500 text-sm">
+                </TouchableOpacity>
+                <Text className="text-gray-400 text-sm">
                   Learn more about Quizanna
                 </Text>
               </View>
@@ -132,11 +150,11 @@ const Menu = ({
           {/* Close Button */}
           <View className="px-6 pb-6">
             <TouchableOpacity
-              className="bg-gray-100 rounded-2xl p-4 active:bg-gray-200"
+              className="ring ring-red-500 rounded-2xl p-4 "
               onPress={handleClose}
               activeOpacity={0.7}
             >
-              <Text className="text-gray-700 text-center font-semibold text-lg">
+              <Text className="text-primary-light text-center font-semibold text-lg">
                 Close
               </Text>
             </TouchableOpacity>

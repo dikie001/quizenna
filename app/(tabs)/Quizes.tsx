@@ -4,7 +4,7 @@ import { Link } from 'expo-router'
 
 const Quizes = () => {
   return (
-    <View className="bg-dark-deep h-screen">
+     <View className="h-screen bg-gradient-to-br from-purple-950 to-slate-950">
       <Text className="text-xl font-bold text-white">
        Quizes Page
       </Text>{" "}
