@@ -3,10 +3,8 @@ import React from 'react'
 
 const DailyChallenge = () => {
   return (
-    <View className="bg-dark-deep h-screen p-3">
-      <Text className="text-xl font-bold text-white">
-        DailyChallenge Page
-      </Text>{" "}
+    <View className="h-screen bg-gradient-to-br from-purple-950 to-slate-950">
+      <Text>DailyChallenge</Text>
     </View>
   );
 }

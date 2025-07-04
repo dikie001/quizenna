@@ -1,11 +1,120 @@
-import { Text, View } from "react-native";
+import { FontAwesome5, Ionicons } from "@expo/vector-icons";
+import { Link } from "expo-router";
+import React, { useState } from "react";
+import {
+  SafeAreaView,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import Menu from "../(components)/Menu";
 
-export default function Index() {
+export default function QuizzyHomepage() {
+
+  const [open,setIsOpen]=useState<boolean>(false)
   return (
-    <View className="flex-1 items-center justify-center bg-dark-deep">
-      <Text className="text-xl font-bold text-white">
-        Welcome to Nativewind!
-      </Text>
-    </View>
+    <SafeAreaView className="flex-1 relative bg-gradient-to-r from-purple-950 to-slate-950">
+      {open && <Menu open={open} setIsOpen={setIsOpen}/>}
+      <ScrollView className="flex-1 px-6 py-8 ">
+        {/* Header */}
+        <View className="flex-row justify-between items-center mb-6">
+          <View>
+            <Text className="text-3xl font-bold text-white">Quizenna</Text>
+          </View>
+          <TouchableOpacity onPress={()=>setIsOpen(!open)} className="w-10 h-10 shadow-xl  items-center justify-center">
+            <Ionicons name={open? "close":"menu"} size={30} color="white" />
+          </TouchableOpacity>
+        </View>
+
+        {/* Welcome Card */}
+        <View className="shadow-xl  bg-gradient-to-tr from-purple-950 to-slate-950 rounded-2xl p-6 mb-6">
+          <Text className="text-white text-xl font-bold mb-2">
+            Ready to Quiz?
+          </Text>
+          <Text className="text-blue-100 text-sm mb-4">
+            Test your knowledge across different topics
+          </Text>
+          <TouchableOpacity className="  shadow-xl shadow-black/60  rounded-xl py-3 px-6 self-start">
+            <Link href={"/quizes/RandomQuiz"} className="text-white font-bold">
+              Start Playing
+            </Link>
+          </TouchableOpacity>
+        </View>
+
+        {/* Quick Stats */}
+        {/* <View className="flex-row justify-between mb-6">
+          <View className="bg-slate-800 rounded-xl p-4 flex-1 mr-2">
+            <Ionicons name="trophy" size={20} color="#f59e0b" />
+            <Text className="text-white text-lg font-bold mt-1">24</Text>
+            <Text className="text-slate-400 text-xs">Completed</Text>
+          </View>
+          <View className="bg-slate-800 rounded-xl p-4 flex-1 mx-2">
+            <Ionicons name="flame" size={20} color="#ef4444" />
+            <Text className="text-white text-lg font-bold mt-1">7</Text>
+            <Text className="text-slate-400 text-xs">Day Streak</Text>
+          </View>
+          <View className="bg-slate-800 rounded-xl p-4 flex-1 ml-2">
+            <Ionicons name="star" size={20} color="#eab308" />
+            <Text className="text-white text-lg font-bold mt-1">89%</Text>
+            <Text className="text-slate-400 text-xs">Best Score</Text>
+          </View>
+        </View> */}
+
+        {/* Daily Challenge */}
+        <View className=" shadow-xl mb-5 shadow-black/60 bg-gradient-to-tl from-purple-950 to-slate-950 rounded-xl p-4 mt-2">
+          <View className="flex-row items-center justify-between">
+            <View>
+              <Text className="text-white font-bold text-lg">
+                Daily Challenge
+              </Text>
+              <Text className="text-slate-400 text-sm">
+                Complete today's quiz
+              </Text>
+            </View>
+            <TouchableOpacity className="shadow-xl shadow-black bg-gradient-to-br from-purple-900 to-slate-900 rounded-full p-3">
+              <Link href={"/quizes/DailyChallenge"}>
+                <Ionicons name="play" size={20} color="white" />
+              </Link>
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        {/* Categories */}
+        <Text className="text-white text-lg font-bold mb-4">Categories</Text>
+        <View className="flex-row flex-wrap justify-between">
+          <TouchableOpacity className="shadow-xl shadow-black  bg-gradient-to-br from-purple-950 to-slate-950 rounded-xl p-4 w-[48%] mb-4">
+            <Ionicons name="school" size={24} color="#3b82f6" />
+            <Text className="text-white font-semibold mt-2">
+              General knowledge
+            </Text>
+            <Text className="text-slate-400 text-xs">
+              Random facts,news etc
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity className="shadow-xl shadow-black  bg-gradient-to-l from-purple-950 to-slate-950 rounded-xl p-4 w-[48%] mb-4">
+            <Ionicons name="leaf" size={24} color="#10b981" />
+            <Text className="text-white font-semibold mt-2">
+              Science & Nature
+            </Text>
+            <Text className="text-slate-400 text-xs">Animals, plants,etc</Text>
+          </TouchableOpacity>
+          <TouchableOpacity className="shadow-xl shadow-black  bg-gradient-to-tl from-purple-950 to-slate-950 rounded-xl p-4 w-[48%] mb-4">
+            <Ionicons name="library" size={24} color="#f59e0b" />
+            <Text className="text-white font-semibold mt-2">
+              English lang...
+            </Text>
+            <Text className="text-slate-400 text-xs">Grammar, vocab etc</Text>
+          </TouchableOpacity>
+          <TouchableOpacity className="shadow-xl shadow-black bg-gradient-to-r from-purple-950 to-slate-950 rounded-xl p-4 w-[48%] mb-4">
+            <FontAwesome5 name="laptop-code" size={24} color="violet" />
+            <Text className="text-white font-semibold mt-2">
+              Technology & IT
+            </Text>
+            <Text className="text-slate-400 text-xs">Modern tech</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }

@@ -3,7 +3,7 @@ import React from 'react'
 
 const Profile = () => {
   return (
-    <View className="bg-dark-deep h-screen">
+    <View className="bg-dark-deep h-screen p-3">
       <Text className="text-xl font-bold text-white">
         Profile Page
       </Text>{" "}
