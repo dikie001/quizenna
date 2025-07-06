@@ -1,12 +1,13 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import React from "react";
+import { SafeAreaView, View } from "react-native";
+import BackButton from "../(components)/BackButton";
 
 const Scores = () => {
   return (
-     <View className="h-screen bg-gradient-to-br from-purple-950 to-slate-950">
-          <Text>About</Text>
-        </View>
-  )
-}
+    <SafeAreaView className="h-screen bg-gradient-to-br from-purple-950 to-slate-950">
+      <BackButton />{" "}
+    </SafeAreaView>
+  );
+};
 
-export default Scores
+export default Scores;

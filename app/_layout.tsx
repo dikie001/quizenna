@@ -22,9 +22,13 @@ export default function RootLayout() {
         options={{ headerShown: false }}
       />
       <Stack.Screen name="quizes/Technology" options={{ headerShown: false }} />
-
       <Stack.Screen name="quizes/RandomQuiz" options={{ headerShown: false }} />
-      <Stack.Screen name="(screens)" options={{ headerShown: false }} />
+      <Stack.Screen name="(screens)/About" options={{ headerShown: false }} />
+      <Stack.Screen name="(screens)/Scores" options={{ headerShown: false }} />
+      <Stack.Screen
+        name="(screens)/Settings"
+        options={{ headerShown: false }}
+      />
     </Stack>
   );
 }

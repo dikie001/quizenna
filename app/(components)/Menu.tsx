@@ -35,7 +35,7 @@ const Menu = ({
     <Modal visible={visible} transparent={true} animationType="slide">
       {/* Backdrop */}
       <Pressable
-        className="flex-1  justify-center items-center px-4"
+        className="flex-1 backdrop-blur-sm  justify-center items-center  w-full px-4"
         onPress={handleClose}
       >
         {/* Menu Container */}
@@ -97,7 +97,7 @@ const Menu = ({
             </TouchableOpacity>
 
             <TouchableOpacity
-              className=" ring rounded-2xl p-4 active:bg-gray-100 flex-row items-center"
+              className=" ring rounded-2xl p-4  flex-row items-center"
               onPress={() => handleMenuAction(onSettings)}
               activeOpacity={0.7}
             >
@@ -122,9 +122,8 @@ const Menu = ({
             </TouchableOpacity>
 
             <TouchableOpacity
-              className="ring border-gray-200 rounded-2xl p-4 active:bg-gray-100 flex-row items-center"
-              onPress={() => handleMenuAction(onAbout)}
-              activeOpacity={0.7}
+              className="ring  rounded-2xl p-4  flex-row items-center"
+          
             >
               <View className=" p-2 mr-4">
                 <Ionicons name="information-circle" size={20} color="#10B981" />

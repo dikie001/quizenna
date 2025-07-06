@@ -4,9 +4,10 @@ import React from "react";
 import { Text, View } from "react-native";
 
 const TabIcon = ({ focused, name, icon }:any) => (
+  
   <View className="items-center justify-center py-1">
     <View
-      className={`${focused ? "bg-slate-500" : "bg-transparent"} rounded-full px-4 py-3 min-h-[50] flex-row items-center justify-center transition-all duration-300`}
+      className={`${focused ? "bg-slate-700 " : "bg-transparent"} rounded-full px-4 py-3 min-h-[50] flex-row items-center justify-center transition-all duration-300`}
     >
       <Ionicons
         name={icon}
@@ -29,7 +30,7 @@ const tabs = [
 
 export default function TabLayout() {
   return (
-    <Tabs
+    <Tabs 
       screenOptions={{
         tabBarItemStyle: {
           height: 60,
@@ -37,11 +38,12 @@ export default function TabLayout() {
           paddingVertical: 8,
         },
         tabBarStyle: {
-          backgroundColor: "#0f172a",
+          backgroundColor:"#2B124C",
           height: 52,
           borderRadius: 25,
           marginHorizontal: 16,
           marginBottom: 20,
+          marginTop:20,
           position: "absolute",
           borderTopWidth: 0,
           shadowColor: "#000",

@@ -1,15 +1,16 @@
-import { View, Text } from 'react-native'
-import React from 'react'
-import { Link } from 'expo-router'
+import React from "react";
+import { SafeAreaView, View } from "react-native";
+import Navbar from "../(components)/Navbar";
 
 const Quizes = () => {
   return (
-     <View className="h-screen bg-gradient-to-br from-purple-950 to-slate-950">
-      <Text className="text-xl font-bold text-white">
-       Quizes Page
-      </Text>{" "}
-    </View>
+    <SafeAreaView className="h-screen bg-gradient-to-br from-purple-950 to-slate-950">
+      <Navbar />
+      <View className="px-4 py-4">
+           All Quiz page
+      </View>
+    </SafeAreaView>
   );
-}
+};
 
-export default Quizes
+export default Quizes;

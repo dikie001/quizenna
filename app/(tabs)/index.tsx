@@ -9,27 +9,18 @@ import {
   View,
 } from "react-native";
 import Menu from "../(components)/Menu";
+import Navbar from "../(components)/Navbar";
 
 export default function QuizzyHomepage() {
   const [open, setIsOpen] = useState<boolean>(false);
   return (
     <SafeAreaView
-      className={`${open ? "backdrop-blur-sm" : ""} flex-1 relative bg-gradient-to-r from-purple-950 to-slate-950`}
+      className={`inset-0  flex-1 relative bg-gradient-to-r from-purple-950 to-slate-950`}
     >
-      {open && <Menu open={open} setIsOpen={setIsOpen} />}
-      <ScrollView className={` flex-1 px-6 py-8 `}>
+      {" "}
+      <Navbar />
+      <ScrollView className={` flex-1 px-4 py-8 `}>
         {/* Header */}
-        <View className="flex-row justify-between items-center mb-6">
-          <View>
-            <Text className="text-3xl font-bold text-white">Quizenna</Text>
-          </View>
-          <TouchableOpacity
-            onPress={() => setIsOpen(!open)}
-            className="w-10 h-10 shadow-xl  items-center justify-center"
-          >
-            <Ionicons name={open ? "close" : "menu"} size={30} color="white" />
-          </TouchableOpacity>
-        </View>
 
         {/* Welcome Card */}
         <View className="shadow-xl  bg-gradient-to-tr from-purple-950 to-slate-950 rounded-2xl p-6 mb-6">
@@ -76,19 +67,24 @@ export default function QuizzyHomepage() {
                 Complete today's quiz
               </Text>
             </View>
-            <TouchableOpacity onPress={()=>{
-              router.push("/(tabs)/DailyChallenge")
-            }} className="shadow-xl shadow-black bg-gradient-to-br from-purple-900 to-slate-900 rounded-full p-3">
-              
-                <Ionicons name="play" size={20} color="white" />
+            <TouchableOpacity
+              onPress={() => {
+                router.push("/(tabs)/DailyChallenge");
+              }}
+              className="shadow-xl shadow-black bg-gradient-to-br from-purple-900 to-slate-900 rounded-full p-3"
+            >
+              <Ionicons name="play" size={20} color="white" />
             </TouchableOpacity>
           </View>
         </View>
 
         {/* Categories */}
         <Text className="text-white text-lg font-bold mb-4">Categories</Text>
-        <View className="flex-row flex-wrap justify-between">
-          <TouchableOpacity onPress={()=>router.push("/quizes/GeneralKnowledge")} className="shadow-xl shadow-black  bg-gradient-to-br from-purple-950 to-slate-950 rounded-xl p-4 w-[48%] mb-4">
+        <View className="flex-row flex-wrap justify-between mb-12">
+          <TouchableOpacity
+            onPress={() => router.push("/quizes/GeneralKnowledge")}
+            className="shadow-xl shadow-black  bg-gradient-to-br from-purple-950 to-slate-950 rounded-xl p-4 w-[48%] mb-4"
+          >
             <Ionicons name="school" size={24} color="#3b82f6" />
             <Text className="text-white font-semibold mt-2">
               General knowledge
@@ -97,26 +93,43 @@ export default function QuizzyHomepage() {
               Random facts,news etc
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={()=>router.push("/quizes/ScienceAndNature")} className="shadow-xl shadow-black  bg-gradient-to-l from-purple-950 to-slate-950 rounded-xl p-4 w-[48%] mb-4">
+          <TouchableOpacity
+            onPress={() => router.push("/quizes/ScienceAndNature")}
+            className="shadow-xl shadow-black  bg-gradient-to-l from-purple-950 to-slate-950 rounded-xl p-4 w-[48%] mb-4"
+          >
             <Ionicons name="leaf" size={24} color="#10b981" />
             <Text className="text-white font-semibold mt-2">
               Science & Nature
             </Text>
             <Text className="text-slate-400 text-xs">Animals, plants,etc</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={()=>router.push("/quizes/EnglishLanguage")} className="shadow-xl shadow-black  bg-gradient-to-tl from-purple-950 to-slate-950 rounded-xl p-4 w-[48%] mb-4">
+          <TouchableOpacity
+            onPress={() => router.push("/quizes/EnglishLanguage")}
+            className="shadow-xl shadow-black  bg-gradient-to-tl from-purple-950 to-slate-950 rounded-xl p-4 w-[48%] mb-4"
+          >
             <Ionicons name="library" size={24} color="#f59e0b" />
             <Text className="text-white font-semibold mt-2">
               English lang...
             </Text>
             <Text className="text-slate-400 text-xs">Grammar, vocab etc</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={()=>router.push("/quizes/Technology")} className="shadow-xl shadow-black bg-gradient-to-r from-purple-950 to-slate-950 rounded-xl p-4 w-[48%] mb-4">
+          <TouchableOpacity
+            onPress={() => router.push("/quizes/Technology")}
+            className="shadow-xl shadow-black bg-gradient-to-r from-purple-950 to-slate-950 rounded-xl p-4 w-[48%] mb-4"
+          >
             <FontAwesome5 name="laptop-code" size={24} color="violet" />
             <Text className="text-white font-semibold mt-2">
               Technology & IT
             </Text>
             <Text className="text-slate-400 text-xs">Modern tech</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => router.push("/quizes/GeneralKnowledge")}
+            className="shadow-x  shadow-black   bg-gradient-to-br from-purple-950 to-slate-950 rounded-xl p-4 w-[48%] mb-4"
+          >
+            <Ionicons name="cloud" size={24} color="#3b82f6" />
+            <Text className="text-white font-semibold mt-2">Logic</Text>
+            <Text className="text-slate-400 text-xs">problem solving</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
