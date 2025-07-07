@@ -45,7 +45,6 @@ const Menu = ({
         >
           {/* Header with gradient background */}
           <View className="ring-1 bg-gradient-to-r from-purple-950 to-slate-950 px-8 py-2 items-center">
-            <View className=" rounded-full p-4 "></View>
             <Text className="text-3xl font-bold text-white mb-2">Quizenna</Text>
           </View>
 
@@ -54,11 +53,11 @@ const Menu = ({
             {/* Start Quiz - Primary Action */}
             <TouchableOpacity
               className=" bg-gradient-to-tl shadow-black/60 from-purple-950 to-slate-950 rounded-2xl p-4 shadow-lg  flex-row items-center justify-center"
-            //   onPress={() => handleMenuAction(onStartQuiz)}
-            onPress={()=>{
+              //   onPress={() => handleMenuAction(onStartQuiz)}
+              onPress={() => {
                 router.push("/quizes/RandomQuiz");
-                setIsOpen(false)
-            }}
+                setIsOpen(false);
+              }}
               activeOpacity={0.8}
             >
               <Ionicons
@@ -87,7 +86,7 @@ const Menu = ({
                   }}
                   className="text-primary-light text-lg font-semibold"
                 >
-                  High Scores
+                  <Text>High Scores</Text>
                 </TouchableOpacity>
                 <Text className="text-gray-400 text-sm">
                   View your best performances
@@ -112,7 +111,7 @@ const Menu = ({
                   }}
                   className="text-primary-light text-lg font-semibold"
                 >
-                  Settings
+                  <Text>About</Text>
                 </TouchableOpacity>
                 <Text className="text-gray-400 text-sm">
                   Customize your experience
@@ -121,10 +120,7 @@ const Menu = ({
               <Ionicons name="chevron-forward" size={20} color="#9CA3AF" />
             </TouchableOpacity>
 
-            <TouchableOpacity
-              className="ring  rounded-2xl p-4  flex-row items-center"
-          
-            >
+            <TouchableOpacity className="ring  rounded-2xl p-4  flex-row items-center">
               <View className=" p-2 mr-4">
                 <Ionicons name="information-circle" size={20} color="#10B981" />
               </View>
@@ -136,7 +132,7 @@ const Menu = ({
                   }}
                   className="text-primary-light text-lg font-semibold"
                 >
-                  About
+                  <Text className="text-primary-light">About</Text>
                 </TouchableOpacity>
                 <Text className="text-gray-400 text-sm">
                   Learn more about Quizanna
