@@ -69,7 +69,7 @@ const Menu = ({
               className=" bg-gradient-to-tl shadow-black/60 from-purple-950 to-slate-950 rounded-2xl p-4 shadow-lg  flex-row items-center justify-center"
               //   onPress={() => handleMenuAction(onStartQuiz)}
               onPress={() => {
-                router.push("/quizes/RandomQuiz");
+                router.push("/quizes/GeneralKnowledge");
                 setIsOpen(false);
               }}
               activeOpacity={0.8}

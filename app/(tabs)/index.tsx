@@ -30,7 +30,7 @@ export default function QuizzyHomepage() {
             Test your knowledge across different topics
           </Text>
           <TouchableOpacity className="  shadow-xl shadow-black/60  rounded-xl py-3 px-6 self-start">
-            <Link href={"/quizes/RandomQuiz"} className="text-white font-bold">
+            <Link href={"/quizes/GeneralKnowledge"} className="text-white font-bold">
               Start Playing
             </Link>
           </TouchableOpacity>
@@ -64,15 +64,15 @@ export default function QuizzyHomepage() {
         <Text className="text-white text-lg font-bold mb-4">Categories</Text>
         <View className="flex-row flex-wrap justify-between mb-12">
           <TouchableOpacity
-            onPress={() => router.push("/quizes/GeneralKnowledge")}
+            onPress={() => router.push("/quizes/Art")}
             className="shadow-xl shadow-black  bg-gradient-to-br from-purple-950 to-slate-950 rounded-xl p-4 w-[48%] mb-4"
           >
             <Ionicons name="school" size={24} color="#3b82f6" />
             <Text className="text-white font-semibold mt-2">
-              General knowledge
+              Art
             </Text>
             <Text className="text-slate-400 text-xs">
-              Random facts,news etc
+          Art history, famous artists, etc
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -105,14 +105,7 @@ export default function QuizzyHomepage() {
             </Text>
             <Text className="text-slate-400 text-xs">Modern tech</Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => router.push("/quizes/GeneralKnowledge")}
-            className="shadow-x  shadow-black   bg-gradient-to-br from-purple-950 to-slate-950 rounded-xl p-4 w-[48%] mb-4"
-          >
-            <Ionicons name="cloud" size={24} color="#3b82f6" />
-            <Text className="text-white font-semibold mt-2">Logic</Text>
-            <Text className="text-slate-400 text-xs">problem solving</Text>
-          </TouchableOpacity>
+        
         </View>
       </ScrollView>
     </SafeAreaView>

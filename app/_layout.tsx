@@ -14,7 +14,7 @@ export default function RootLayout() {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="quizes/GeneralKnowledge"
+        name="quizes/Art"
         options={{ headerShown: false }}
       />
       <Stack.Screen
@@ -22,7 +22,7 @@ export default function RootLayout() {
         options={{ headerShown: false }}
       />
       <Stack.Screen name="quizes/Technology" options={{ headerShown: false }} />
-      <Stack.Screen name="quizes/RandomQuiz" options={{ headerShown: false }} />
+      <Stack.Screen name="quizes/GeneralKnowledge" options={{ headerShown: false }} />
       <Stack.Screen name="(screens)/About" options={{ headerShown: false }} />
       <Stack.Screen name="(screens)/Scores" options={{ headerShown: false }} />
       <Stack.Screen

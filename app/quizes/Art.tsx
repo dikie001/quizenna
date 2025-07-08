@@ -11,7 +11,7 @@ import {
 import Navbar from "../(components)/Navbar";
 
 const URL = "https://opentdb.com/api.php?";
-const STORAGE_KEY = "random-quiz-questions";
+const STORAGE_KEY = "art-quiz-questions";
 
 // Fetch data from API stuff
 type QueryParams = {
@@ -24,7 +24,7 @@ type QueryParams = {
 const query: QueryParams = {
   amount: 50,
   difficulty: "easy",
-  category: 9,
+  category: 25,
   type: "multiple",
 };
 
@@ -65,7 +65,7 @@ type QuizTypes = {
 };
 
 // main function
-const RandomQuiz = () => {
+const Art = () => {
   const [questions, setQuestions] = useState<QuizTypes[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
@@ -309,4 +309,4 @@ const RandomQuiz = () => {
   );
 };
 
-export default RandomQuiz;
+export default Art;
