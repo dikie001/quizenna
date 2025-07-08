@@ -1,7 +1,7 @@
 import React from "react";
-import { SafeAreaView, Text, TouchableOpacity, View } from "react-native";
-import { FetchData } from "../(components)/FetchData";
+import { SafeAreaView, Text, TouchableOpacity } from "react-native";
 import Navbar from "../(components)/Navbar";
+import { FetchData } from "../utils/FetchData";
 
 const Scores = () => {
   return (

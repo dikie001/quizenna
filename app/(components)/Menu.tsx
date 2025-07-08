@@ -44,7 +44,21 @@ const Menu = ({
           onPress={(e) => e.stopPropagation()}
         >
           {/* Header with gradient background */}
-          <View className="ring-1 bg-gradient-to-r from-purple-950 to-slate-950 px-8 py-2 items-center">
+          <View className="ring-1 flex flex-row bg-gradient-to-r from-purple-950 to-slate-950 px-8 py-2 items-center">
+            {/* Back button for header */}
+            <TouchableOpacity
+              onPress={() => {
+                router.back();
+                setIsOpen(false)
+              }}
+              className="mr-12 active:bg-slate-500/40 p-2 rounded-full"
+            >
+              <Ionicons
+                name="chevron-back"
+                size={30}
+                className="text-softWhite"
+              />
+            </TouchableOpacity>
             <Text className="text-3xl font-bold text-white mb-2">Quizenna</Text>
           </View>
 

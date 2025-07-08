@@ -7,8 +7,9 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { FetchData } from "../(components)/FetchData";
 import Navbar from "../(components)/Navbar";
+import { FetchData } from "../utils/FetchData";
+import { Ionicons } from "@expo/vector-icons";
 
 type QuizTypes = {
   type: string;
@@ -23,36 +24,34 @@ type QuizTypes = {
 const RandomQuiz = () => {
   const [questions, setQuestions] = useState<QuizTypes[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [selectedAnswer, setSelectedAnswer] = useState(null);
+  const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [showResult, setShowResult] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState<string>("");
+  const [score, setScore] = useState(0);
+  const [streak, setStreak] = useState(0);
 
   const STORAGE_KEY = "random-quiz-questions";
 
   useEffect(() => {
-    const init = async () => {
-      await loadQuestions();
-    };
-    init();
+    loadQuestions();
   }, []);
 
   const loadQuestions = async () => {
-    setLoading(true);
+    if (!loading) setLoading(true);
+
     try {
-      const savedData: any = await AsyncStorage.getItem(STORAGE_KEY);
+      const savedData = await AsyncStorage.getItem(STORAGE_KEY);
 
       if (savedData) {
         const parsed = JSON.parse(savedData);
-
+        if (parsed.length === 0) {
+          await fetchNew();
+          return;
+        }
         const processed = parsed.map((q: any) => shuffleAnswers(q));
         setQuestions(processed);
-        if (parsed.length === 0) {
-          console.log("Nothing in the storage...");
-          await fetchNew();
-        }
       } else {
-        fetchNew();
+        await fetchNew();
       }
     } catch (error) {
       console.error("Error loading questions:", error);
@@ -67,102 +66,88 @@ const RandomQuiz = () => {
     return { ...question, allAnswers: shuffledAnswers };
   };
 
-  // Handle selected answer,navigation and validation
-  const handleAnswerSelect = (answer: any, answerIndex: any) => {
+  const handleAnswerSelect = (answer: string, answerIndex: number) => {
     setSelectedAnswer(answerIndex);
     setShowResult(true);
-    if (currentIndex < questions.length) {
-      setTimeout(() => {
-        console.log(
-          "current-index: ",
-          currentIndex,
-          "questions-length: ",
-          questions.length
-        );
-        setSelectedAnswer(null);
-        setShowResult(false);
-        DeleteQuestion();
-        setCurrentIndex((prev) => prev + 1);
-        console.log("newIndex", currentIndex);
-      }, 2500);
-    } else if (
-      currentIndex >= questions.length ||
-      !currentIndex ||
-      questions.length === 0 ||
-      !questions
-    ) {
-      console.log("empty object!");
-      fetchNew();
-      console.log("Data updated!");
+
+    const isCorrect = answer === questions[currentIndex].correct_answer;
+
+    if (isCorrect) {
+      setScore((prev) => prev + 1);
+      setStreak((prev) => prev + 1);
+    } else {
+      setStreak(0);
     }
+
+    setTimeout(() => {
+      setSelectedAnswer(null);
+      setShowResult(false);
+      setCurrentIndex((prev) => prev + 1);
+      deleteQuestion();
+    }, 2000);
   };
 
-  // retry fetch
-  const RetryFetch = async () => {
-    setLoading(true);
-    await FetchData();
-    const newData = await AsyncStorage.getItem(STORAGE_KEY);
-    if (newData) {
-      loadQuestions();
-    }
-  };
-
-  // Fetch new Questions
   const fetchNew = async () => {
     setLoading(true);
     try {
-      console.log("fetching data from api...");
-      const newData: any = await FetchData();
+      const newData:any = await FetchData();
       if (newData) {
-        setLoading(false);
-      } else {
-        setMessage("Network Error! Connect to internet");
+        const processed = newData.map((q: any) => shuffleAnswers(q));
+        setQuestions(processed);
+        await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(newData));
       }
     } catch (err) {
-      console.log(err);
+      console.log("Fetch error:", err);
+    } finally {
+      setLoading(false);
     }
   };
 
-  // Delete answred questions
-  const DeleteQuestion = async () => {
-    const newQuestions: any = questions.filter(
-      (_, index) => index !== currentIndex
-    );
+  const deleteQuestion = async () => {
+    const newQuestions = questions.filter((_, index) => index !== currentIndex);
     setQuestions(newQuestions);
 
     try {
-      await AsyncStorage.setItem(
-        "random-quiz-questions",
-        JSON.stringify(newQuestions)
-      );
+      await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(newQuestions));
     } catch (err) {
-      console.log(err);
+      console.log("Storage error:", err);
     }
   };
 
+  // const getProgressWidth = () => {
+  //   const total = questions.length + currentIndex;
+  //   return total > 0 ? (currentIndex / total) * 100 : 0;
+  // };
+
   if (loading) {
     return (
-      <SafeAreaView className="h-screen bg-gradient-to-br from-purple-950 to-slate-950 justify-center items-center">
-        <ActivityIndicator size="large" color="#a855f7" />
-        <Text className="text-primary-light text-md mt-4 font-medium">
-          Loading quizes...
-        </Text>
+      <SafeAreaView className="h-screen bg-gradient-to-br from-purple-950 via-blue-950 to-slate-950 justify-center items-center">
+        <View className="items-center">
+          <ActivityIndicator size="large" color="#8b5cf6" />
+          <Text className="text-white text-lg mt-4 font-medium">
+            🧠 Loading Brain Teasers...
+          </Text>
+        </View>
       </SafeAreaView>
     );
   }
 
-  if (!questions.length || !questions) {
+  if (!questions.length) {
     return (
-      <SafeAreaView className="h-screen bg-gradient-to-br from-purple-950 to-slate-950">
+      <SafeAreaView className="h-screen bg-gradient-to-br from-purple-950 via-blue-950 to-slate-950">
         <Navbar />
-        <View className="flex-1 justify-center items-center px-4">
-          <Text className="text-white text-lg text-center">{message}</Text>
+        <View className="flex-1 justify-center items-center px-6">
+          <Text className="text-6xl mb-4">🤔</Text>
+          <Text className="text-white text-xl text-center mb-6">
+            Oops! No questions found
+          </Text>
           <TouchableOpacity
-            onPress={RetryFetch}
-            className="text-white bg-violet-700 py-2 px-6 mt-2 rounded-md shadow-xl animate-pulse"
+            onPress={fetchNew}
+            className="flex  flex-row gap-1  justify-center items-center bg-gradient-to-r from-purple-600 to-blue-600 py-4 px-5 rounded-2xl shadow-xl"
           >
-            <Text className="text-white font-semibold text-lg">Retry</Text>
-          </TouchableOpacity>{" "}
+            <Ionicons name="reload" size={20} className="text-white " />
+            <Text className="text-white font-bold text-lg"> Reload Quiz</Text>
+          </TouchableOpacity>
         </View>
       </SafeAreaView>
     );
@@ -177,38 +162,62 @@ const RandomQuiz = () => {
       currentQuestion.correct_answer;
 
   return (
-    <SafeAreaView className="h-screen bg-gradient-to-br from-purple-950 to-slate-950">
+    <SafeAreaView className="h-screen bg-gradient-to-br from-purple-950 via-blue-950 to-slate-950">
       <Navbar />
 
-      <View className="flex-1 px-6 py-8">
-        {/* Question card */}
-        <View className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 mb-6">
-          <Text className="text-purple-300 text-sm mb-3">
-            {currentQuestion?.category || null} •{" "}
-            {currentQuestion?.difficulty || null}
-          </Text>
+      <View className="flex-1 px-4 py-4">
+        {/* Stats Header */}
+        <View className="flex-row justify-between items-center mb-4">
+          <View className="bg-white/10 backdrop-blur-sm rounded-full px-5 py-3">
+            <Text className="text-purple-300 font-semibold text-base">
+              Score: {score}
+            </Text>
+          </View>
+          <View className="bg-white/10 backdrop-blur-sm rounded-full px-5 py-3">
+            <Text className="text-yellow-300 font-semibold text-base">
+              🔥 {streak}
+            </Text>
+          </View>
+        </View>
 
-          <Text className="text-white text-xl leading-7 mb-6">
-            {currentQuestion?.question
+        {/* Question Card */}
+        <View className="bg-white/10 backdrop-blur-md rounded-3xl p-6 mb-6 shadow-2xl">
+          <View className="flex-row items-center justify-between mb-4">
+            <Text className="text-purple-300 text-sm font-medium">
+              {currentQuestion.category}
+            </Text>
+            <Text className="text-purple-400 text-sm font-bold">
+              {currentQuestion.difficulty.toUpperCase()}
+            </Text>
+          </View>
+
+          <Text className="text-white text-xl font-semibold leading-8 mb-6">
+            {currentQuestion.question
               .replace(/&quot;/g, '"')
-              .replace(/&#039;/g, "'")}
+              .replace(/&#039;/g, "'")
+              .replace(/&amp;/g, "&")}
           </Text>
 
-          {/* Answer options */}
+          {/* Answer Options */}
           <View className="space-y-3">
-            {currentQuestion?.allAnswers.map((answer, answerIndex) => {
+            {currentQuestion.allAnswers.map((answer, answerIndex) => {
               const isSelected = selectedAnswer === answerIndex;
               const isCorrectAnswer = answer === currentQuestion.correct_answer;
 
-              let buttonStyle =
-                "p-4 rounded-xl bg-white/5 border border-white/20";
+              let buttonStyle = "p-4 rounded-2xl border-2 ";
+              let textStyle = "text-white text-base font-medium";
 
               if (showResult && isSelected && isCorrect) {
-                buttonStyle += " bg-green-500/20 border-green-500/50";
+                buttonStyle += "bg-green-500/20 border-green-400";
+                textStyle = "text-green-300 text-base font-bold";
               } else if (showResult && isSelected && !isCorrect) {
-                buttonStyle += " bg-red-500/20 border-red-500/50";
+                buttonStyle += "bg-red-500/20 border-red-400";
+                textStyle = "text-red-300 text-base font-bold";
               } else if (showResult && isCorrectAnswer) {
-                buttonStyle += " bg-green-500/20  border-green-500/50";
+                buttonStyle += "bg-green-500/20 border-green-400";
+                textStyle = "text-green-300 text-base font-bold";
+              } else {
+                buttonStyle += "bg-white/5 border-white/20 active:bg-white/10";
               }
 
               return (
@@ -220,9 +229,12 @@ const RandomQuiz = () => {
                   className={buttonStyle}
                   disabled={showResult}
                 >
-                  <Text className="text-white text-base">
+                  <Text className={textStyle}>
                     {String.fromCharCode(65 + answerIndex)}.{" "}
-                    {answer.replace(/&quot;/g, '"').replace(/&#039;/g, "'")}
+                    {answer
+                      .replace(/&quot;/g, '"')
+                      .replace(/&#039;/g, "'")
+                      .replace(/&amp;/g, "&")}
                   </Text>
                 </TouchableOpacity>
               );
@@ -230,14 +242,19 @@ const RandomQuiz = () => {
           </View>
         </View>
 
-        {/* Result and navigation */}
+        {/* Result Feedback */}
         {showResult && (
           <View className="items-center">
             <Text
-              className={`text-lg mb-4 ${isCorrect ? "text-green-400" : "text-red-400"}`}
+              className={`text-xl font-bold ${isCorrect ? "text-green-400" : "text-red-400"}`}
             >
-              {isCorrect ? "✓ Correct!" : "✗ Incorrect!"}
+              {isCorrect ? "Brilliant!" : "Almost there!"}
             </Text>
+            {streak > 2 && isCorrect && (
+              <Text className="text-yellow-300 text-sm mt-1">
+                🔥 {streak} in a row!
+              </Text>
+            )}
           </View>
         )}
       </View>

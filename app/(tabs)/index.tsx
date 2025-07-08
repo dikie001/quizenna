@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import Menu from "../(components)/Menu";
 import Navbar from "../(components)/Navbar";
 
 export default function QuizzyHomepage() {
@@ -37,24 +36,7 @@ export default function QuizzyHomepage() {
           </TouchableOpacity>
         </View>
 
-        {/* Quick Stats */}
-        {/* <View className="flex-row justify-between mb-6">
-          <View className="bg-slate-800 rounded-xl p-4 flex-1 mr-2">
-            <Ionicons name="trophy" size={20} color="#f59e0b" />
-            <Text className="text-white text-lg font-bold mt-1">24</Text>
-            <Text className="text-slate-400 text-xs">Completed</Text>
-          </View>
-          <View className="bg-slate-800 rounded-xl p-4 flex-1 mx-2">
-            <Ionicons name="flame" size={20} color="#ef4444" />
-            <Text className="text-white text-lg font-bold mt-1">7</Text>
-            <Text className="text-slate-400 text-xs">Day Streak</Text>
-          </View>
-          <View className="bg-slate-800 rounded-xl p-4 flex-1 ml-2">
-            <Ionicons name="star" size={20} color="#eab308" />
-            <Text className="text-white text-lg font-bold mt-1">89%</Text>
-            <Text className="text-slate-400 text-xs">Best Score</Text>
-          </View>
-        </View> */}
+ 
 
         {/* Daily Challenge */}
         <View className=" shadow-xl mb-5 shadow-black/60 bg-gradient-to-tl from-purple-950 to-slate-950 rounded-xl p-4 mt-2">

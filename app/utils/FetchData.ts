@@ -8,7 +8,7 @@ type QueryParams = {
   type: string;
 };
 const query: QueryParams = {
-  amount: 50, // Number of questions to fetch
+  amount: 50, 
   category: 9,
   difficulty: "easy",
   type: "multiple",
@@ -22,10 +22,9 @@ const fullQuery = (params: QueryParams): string => {
 
 export const FetchData = async () => {
   try {
-    console.log("fetching data...");
     const res = await fetch(`${URL}${fullQuery(query)}`);
+
     const data = await res.json();
-    console.log("Data", data);
     const questions = JSON.stringify(data.results);
     AsyncStorage.setItem("random-quiz-questions", questions);
     console.log("saved...");
@@ -34,4 +33,3 @@ export const FetchData = async () => {
     console.log("Run into an error:", err);
   }
 };
-
