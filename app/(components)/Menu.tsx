@@ -84,11 +84,7 @@ const Menu = ({
             </TouchableOpacity>
 
             {/* Secondary Actions */}
-            <TouchableOpacity
-              className="ring-1 shadow-xl outline-none   rounded-2xl p-2 flex-row items-center"
-              onPress={() => handleMenuAction(onHighScores)}
-              activeOpacity={0.7}
-            >
+            <TouchableOpacity className="ring-1 shadow-xl outline-none   rounded-2xl p-2 flex-row items-center">
               <View className="p-2 mr-4">
                 <Ionicons name="home" size={20} color="#EAB308" />
               </View>
@@ -101,6 +97,24 @@ const Menu = ({
                 >
                   <Text className="text-primary-light text-lg font-semibold">
                     Home
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <Ionicons name="chevron-forward" size={20} color="#9CA3AF" />
+            </TouchableOpacity>
+            <TouchableOpacity className="ring-1 shadow-xl outline-none   rounded-2xl p-2 flex-row items-center">
+              <View className="p-2 mr-4">
+                <Ionicons name="map" size={20} color="#EAB308" />
+              </View>
+              <View className="flex-1">
+                <TouchableOpacity
+                  onPress={() => {
+                    router.push("/_sitemap");
+                    setIsOpen(false);
+                  }}
+                >
+                  <Text className="text-primary-light text-lg font-semibold">
+                    Site map
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -145,7 +159,6 @@ const Menu = ({
                     About
                   </Text>
                 </TouchableOpacity>
-      
               </View>
               <Ionicons name="chevron-forward" size={20} color="#9CA3AF" />
             </TouchableOpacity>
