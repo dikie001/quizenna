@@ -49,7 +49,7 @@ const Menu = ({
             <TouchableOpacity
               onPress={() => {
                 router.back();
-                setIsOpen(false)
+                setIsOpen(false);
               }}
               className="mr-12 active:bg-slate-500/40 p-2 rounded-full"
             >
@@ -85,32 +85,30 @@ const Menu = ({
 
             {/* Secondary Actions */}
             <TouchableOpacity
-              className="ring outline-none   rounded-2xl p-4 flex-row items-center"
+              className="ring-1 shadow-xl outline-none   rounded-2xl p-2 flex-row items-center"
               onPress={() => handleMenuAction(onHighScores)}
               activeOpacity={0.7}
             >
               <View className="p-2 mr-4">
-                <Ionicons name="trophy" size={20} color="#EAB308" />
+                <Ionicons name="home" size={20} color="#EAB308" />
               </View>
               <View className="flex-1">
                 <TouchableOpacity
                   onPress={() => {
-                    router.push("/(screens)/Scores");
+                    router.push("/");
                     setIsOpen(false);
                   }}
-                  className="text-primary-light text-lg font-semibold"
                 >
-                  <Text>High Scores</Text>
+                  <Text className="text-primary-light text-lg font-semibold">
+                    Home
+                  </Text>
                 </TouchableOpacity>
-                <Text className="text-gray-400 text-sm">
-                  View your best performances
-                </Text>
               </View>
               <Ionicons name="chevron-forward" size={20} color="#9CA3AF" />
             </TouchableOpacity>
 
             <TouchableOpacity
-              className=" ring rounded-2xl p-4  flex-row items-center"
+              className=" ring-1 shadow-xl rounded-2xl p-2  flex-row items-center"
               onPress={() => handleMenuAction(onSettings)}
               activeOpacity={0.7}
             >
@@ -123,18 +121,16 @@ const Menu = ({
                     router.push("/(screens)/Settings");
                     setIsOpen(false);
                   }}
-                  className="text-primary-light text-lg font-semibold"
                 >
-                  <Text>About</Text>
+                  <Text className="text-primary-light text-lg font-semibold">
+                    Settings
+                  </Text>
                 </TouchableOpacity>
-                <Text className="text-gray-400 text-sm">
-                  Customize your experience
-                </Text>
               </View>
               <Ionicons name="chevron-forward" size={20} color="#9CA3AF" />
             </TouchableOpacity>
 
-            <TouchableOpacity className="ring  rounded-2xl p-4  flex-row items-center">
+            <TouchableOpacity className="ring-1 shadow-xl  rounded-2xl p-2  flex-row items-center">
               <View className=" p-2 mr-4">
                 <Ionicons name="information-circle" size={20} color="#10B981" />
               </View>
@@ -144,13 +140,12 @@ const Menu = ({
                     router.push("/(screens)/About");
                     setIsOpen(false);
                   }}
-                  className="text-primary-light text-lg font-semibold"
                 >
-                  <Text className="text-primary-light">About</Text>
+                  <Text className="text-primary-light  text-lg font-semibold">
+                    About
+                  </Text>
                 </TouchableOpacity>
-                <Text className="text-gray-400 text-sm">
-                  Learn more about Quizanna
-                </Text>
+      
               </View>
               <Ionicons name="chevron-forward" size={20} color="#9CA3AF" />
             </TouchableOpacity>
@@ -159,7 +154,7 @@ const Menu = ({
           {/* Close Button */}
           <View className="px-6 pb-6">
             <TouchableOpacity
-              className="ring ring-red-500 rounded-2xl p-4 "
+              className="ring ring-red-500 rounded-2xl p-3 "
               onPress={handleClose}
               activeOpacity={0.7}
             >

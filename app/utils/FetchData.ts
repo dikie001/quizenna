@@ -1,15 +1,18 @@
 const URL = "https://opentdb.com/api.php?";
+const STORAGE_KEY = "random-quiz-questions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 type QueryParams = {
   amount: number;
-  category: number;
   difficulty: string;
   type: string;
 };
+
+type categoryProps={
+  category: number
+}
 const query: QueryParams = {
-  amount: 50, 
-  category: 9,
+  amount: 50,
   difficulty: "easy",
   type: "multiple",
 };
@@ -19,17 +22,21 @@ const fullQuery = (params: QueryParams): string => {
     .map(([key, value]) => `${key}=${value}`)
     .join("&");
 };
-
-export const FetchData = async () => {
+export const FetchData = async ({ category }: categoryProps) => {
   try {
-    const res = await fetch(`${URL}${fullQuery(query)}`);
+    console.log("Fetching data from API...");
+    const res = await fetch(`${URL}${fullQuery(query)}&category=${category}`);
 
     const data = await res.json();
+    if (data) {
+      console.log("data fetched from API...");
+    } else {
+      console.log("data not fetched from API...");
+    }
     const questions = JSON.stringify(data.results);
-    AsyncStorage.setItem("random-quiz-questions", questions);
-    console.log("saved...");
-    console.log("Fetched data", questions);
+    AsyncStorage.setItem(STORAGE_KEY, questions);
   } catch (err) {
-    console.log("Run into an error:", err);
+    console.error("Error fetching from API:", err);
   }
 };
+

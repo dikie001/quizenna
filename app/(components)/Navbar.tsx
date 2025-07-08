@@ -15,7 +15,7 @@ const Navbar = () => {
         {open && <Menu open={open} setIsOpen={setIsOpen} />}
         <TouchableOpacity
           onPress={() => setIsOpen(!open)}
-          className="w-10 h-10 shadow-xl  items-center justify-center"
+          className="w-10 h-10 shadow-xl  items-center rounded-full justify-center"
         >
           <Ionicons name={"menu"} size={30} color="white" />
         </TouchableOpacity>

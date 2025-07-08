@@ -1,3 +1,4 @@
+import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useEffect, useState } from "react";
 import {
@@ -8,9 +9,51 @@ import {
   View,
 } from "react-native";
 import Navbar from "../(components)/Navbar";
-import { FetchData } from "../utils/FetchData";
-import { Ionicons } from "@expo/vector-icons";
 
+const URL = "https://opentdb.com/api.php?";
+const STORAGE_KEY = "random-quiz-questions";
+
+// Fetch data from API stuff
+type QueryParams = {
+  amount: number;
+  difficulty: string;
+  category: number;
+  type: string;
+};
+
+const query: QueryParams = {
+  amount: 50,
+  difficulty: "easy",
+  category: 9,
+  type: "multiple",
+};
+
+const fullQuery = (params: QueryParams): string => {
+  return Object.entries(params)
+    .map(([key, value]) => `${key}=${value}`)
+    .join("&");
+};
+
+// Fetch data from API function
+const FetchData = async () => {
+  try {
+    console.log("Fetching data from API...");
+    const res = await fetch(`${URL}${fullQuery(query)}`);
+
+    const data = await res.json();
+    if (data) {
+      console.log("data fetched from API...");
+    } else {
+      console.log("data not fetched from API...");
+    }
+    const questions = JSON.stringify(data.results);
+    AsyncStorage.setItem(STORAGE_KEY, questions);
+  } catch (err) {
+    console.error("Error fetching from API:", err);
+  }
+};
+
+// types
 type QuizTypes = {
   type: string;
   difficulty: string;
@@ -21,6 +64,7 @@ type QuizTypes = {
   allAnswers: string[];
 };
 
+// main function
 const RandomQuiz = () => {
   const [questions, setQuestions] = useState<QuizTypes[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -30,12 +74,11 @@ const RandomQuiz = () => {
   const [score, setScore] = useState(0);
   const [streak, setStreak] = useState(0);
 
-  const STORAGE_KEY = "random-quiz-questions";
-
   useEffect(() => {
     loadQuestions();
   }, []);
 
+  // on first render or reload load questions from asyncstorage
   const loadQuestions = async () => {
     if (!loading) setLoading(true);
 
@@ -60,12 +103,14 @@ const RandomQuiz = () => {
     }
   };
 
+  // combine & shuffle answers
   const shuffleAnswers = (question: any) => {
     const allAnswers = [question.correct_answer, ...question.incorrect_answers];
     const shuffledAnswers = allAnswers.sort(() => Math.random() - 0.5);
     return { ...question, allAnswers: shuffledAnswers };
   };
 
+  // validate answer
   const handleAnswerSelect = (answer: string, answerIndex: number) => {
     setSelectedAnswer(answerIndex);
     setShowResult(true);
@@ -87,14 +132,20 @@ const RandomQuiz = () => {
     }, 2000);
   };
 
+  useEffect(() => {
+    loadQuestions();
+  }, [loading]);
+
+  // fetch new data from API
   const fetchNew = async () => {
     setLoading(true);
     try {
-      const newData:any = await FetchData();
+      const newData: any = await FetchData();
       if (newData) {
         const processed = newData.map((q: any) => shuffleAnswers(q));
-        setQuestions(processed);
         await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(newData));
+        loadQuestions()
+        console.log('done fetching bro..')
       }
     } catch (err) {
       console.log("Fetch error:", err);
@@ -103,6 +154,7 @@ const RandomQuiz = () => {
     }
   };
 
+  // Delete question when answered
   const deleteQuestion = async () => {
     const newQuestions = questions.filter((_, index) => index !== currentIndex);
     setQuestions(newQuestions);
@@ -113,11 +165,6 @@ const RandomQuiz = () => {
       console.log("Storage error:", err);
     }
   };
-
-  // const getProgressWidth = () => {
-  //   const total = questions.length + currentIndex;
-  //   return total > 0 ? (currentIndex / total) * 100 : 0;
-  // };
 
   if (loading) {
     return (
@@ -181,7 +228,7 @@ const RandomQuiz = () => {
         </View>
 
         {/* Question Card */}
-        <View className="bg-white/10 backdrop-blur-md rounded-3xl p-6 mb-6 shadow-2xl">
+        <View className="bg-white/10 backdrop-blur-md rounded-3xl p-6 mb-4 shadow-2xl">
           <View className="flex-row items-center justify-between mb-4">
             <Text className="text-purple-300 text-sm font-medium">
               {currentQuestion.category}
@@ -191,7 +238,7 @@ const RandomQuiz = () => {
             </Text>
           </View>
 
-          <Text className="text-white text-xl font-semibold leading-8 mb-6">
+          <Text className="text-white text-xl font-semibold leading-6 mb-4">
             {currentQuestion.question
               .replace(/&quot;/g, '"')
               .replace(/&#039;/g, "'")
@@ -248,7 +295,7 @@ const RandomQuiz = () => {
             <Text
               className={`text-xl font-bold ${isCorrect ? "text-green-400" : "text-red-400"}`}
             >
-              {isCorrect ? "Brilliant!" : "Almost there!"}
+              {isCorrect ? "correct!" : "nope!"}
             </Text>
             {streak > 2 && isCorrect && (
               <Text className="text-yellow-300 text-sm mt-1">

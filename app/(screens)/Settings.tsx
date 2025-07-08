@@ -1,13 +1,13 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { SafeAreaView, View } from "react-native";
+import Navbar from "../(components)/Navbar";
 
 const Settings = () => {
   return (
-     <View className="h-screen bg-gradient-to-br from-purple-950 to-slate-950">
-        <Text className="text-xl font-bold text-white">
-         Settings Page
-        </Text>
-      </View>
+    <SafeAreaView className="h-screen bg-gradient-to-br from-purple-950 to-slate-950">
+      <Navbar />
+      <View className="px-4 py-8"></View>
+    </SafeAreaView>
   );
 };
 
