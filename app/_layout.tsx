@@ -10,7 +10,7 @@ export default function RootLayout() {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="quizes/EnglishLanguage"
+        name="quizes/Mathematics"
         options={{ headerShown: false }}
       />
       <Stack.Screen

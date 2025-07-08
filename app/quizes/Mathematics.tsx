@@ -11,7 +11,7 @@ import {
 import Navbar from "../(components)/Navbar";
 
 const URL = "https://opentdb.com/api.php?";
-const STORAGE_KEY = "art-quiz-questions";
+const STORAGE_KEY = "maths-quiz-questions";
 
 // Fetch data from API stuff
 type QueryParams = {
@@ -24,7 +24,7 @@ type QueryParams = {
 const query: QueryParams = {
   amount: 10,
   difficulty: "easy",
-  category: 25,
+  category: 19,
   type: "multiple",
 };
 
@@ -65,7 +65,7 @@ type QuizTypes = {
 };
 
 // main function
-const Art = () => {
+const Mathematics = () => {
   const [questions, setQuestions] = useState<QuizTypes[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
@@ -144,8 +144,8 @@ const Art = () => {
       if (newData) {
         const processed = newData.map((q: any) => shuffleAnswers(q));
         await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(newData));
-        loadQuestions()
-        console.log('done fetching bro..')
+        loadQuestions();
+        console.log("done fetching bro..");
       }
     } catch (err) {
       console.log("Fetch error:", err);
@@ -309,4 +309,4 @@ const Art = () => {
   );
 };
 
-export default Art;
+export default Mathematics;

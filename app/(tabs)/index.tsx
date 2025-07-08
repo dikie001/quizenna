@@ -83,17 +83,17 @@ export default function QuizzyHomepage() {
             <Text className="text-white font-semibold mt-2">
               Science & Nature
             </Text>
-            <Text className="text-slate-400 text-xs">Animals, plants,etc</Text>
+            <Text className="text-slate-400 text-xs">Humans, plants,etc</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => router.push("/quizes/EnglishLanguage")}
+            onPress={() => router.push("/quizes/Mathematics")}
             className="shadow-xl shadow-black  bg-gradient-to-tl from-purple-950 to-slate-950 rounded-xl p-4 w-[48%] mb-4"
           >
             <Ionicons name="library" size={24} color="#f59e0b" />
             <Text className="text-white font-semibold mt-2">
-              English lang...
+             Mathematics
             </Text>
-            <Text className="text-slate-400 text-xs">Grammar, vocab etc</Text>
+            <Text className="text-slate-400 text-xs">Math problems and puzzles</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => router.push("/quizes/Technology")}
